@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div id="first-cointainer" class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div id="first-card" class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="remove-button"  class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="input-value-one" type="number" class="form-control text-center" value="0">
+                           <button id="add-button" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$ <span id="bye-amount-one">00</span></h5>
+                        <img id="first-remove-img" src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div id="second-card" class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="minus-button" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="input-value-two" type="number" class="form-control text-center" value="0">
+                           <button id="plus-button" class="btn btn-default"><i class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5>$<span id="bye-amount-two">00</span></h5>
+                        <img id="second-remove-img" src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$<span id="subtotal-amount">00</span></h5>
+                        <h5>$<span id="tax-amount">00</span></h5>
+                        <h5>$<span id="total-amount">00</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button id="check-out-button" type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="second-container" class="container">
+            <div class="submitted-box">
+               <h2 class="center">Your order has been submitted.</h2>
+            </div>
+      </div>
+   </section>
+   <script>
+
+      //Creat a function
+
+      function updateAddAmount (id,addAmount){
+         const amount = document.getElementById(id).innerText;
+         const amountNumber = parseFloat(amount);
+         const totalAmount = amountNumber + addAmount;
+         document.getElementById(id).innerText = totalAmount;
+       }
+
+
+       //iPhone 11 128GB Black part 
+
+      const btnAdd = document.getElementById('add-button');
+      const btnRemove = document.getElementById('remove-button');
+      const input = document.getElementById('input-value-one');
+      const addAmount = 1000;
+
+      btnAdd.addEventListener('click', function(){
+         input.value=parseInt(input.value) +1;
+         updateAddAmount("bye-amount-one",addAmount);
+         updateAddAmount("subtotal-amount",addAmount);
+         updateAddAmount("tax-amount",50)
+         updateAddAmount("total-amount",1050);
+      })
+
+      btnRemove.addEventListener('click', function(){
+         input.value=parseInt(input.value) -1;
+         if (input.value < 0) {
+            alert("Error! you don't input any negative Number")
+            input.value= 0;
+            addAmount= 00;
+         }
+         updateAddAmount("bye-amount-one", -1*addAmount);
+         updateAddAmount("subtotal-amount", -1*addAmount);
+         updateAddAmount("tax-amount",-50)
+         updateAddAmount("total-amount",-1050);
+      })
+
+      //iPhone 11 Silicone Case - Black
+
+      const btnPlus = document.getElementById('plus-button');
+      const btnMinus = document.getElementById('minus-button');
+      const inputTwo = document.getElementById('input-value-two');
+      const addAmountTwo = 500;
+
+      btnPlus.addEventListener('click', function(){
+         inputTwo.value=parseInt(inputTwo.value) +1;
+         updateAddAmount("bye-amount-two",addAmountTwo);
+         updateAddAmount("subtotal-amount",addAmountTwo);
+         updateAddAmount("tax-amount",30)
+         updateAddAmount("total-amount",530);
+      })
+
+      btnMinus.addEventListener('click', function(){
+         inputTwo.value=parseInt(inputTwo.value) -1;
+         if (inputTwo.value < 0) {
+            alert("Error! you don't input any negative Number")
+            inputTwo.value=00;
+            addAmountTwo= 00;
+         }
+         updateAddAmount("bye-amount-two", -1*addAmountTwo);
+         updateAddAmount("subtotal-amount", -1*addAmountTwo);
+         updateAddAmount("tax-amount",-30)
+         updateAddAmount("total-amount",-530);
+      })
+
+      //click to  remove
+
+      function removeCardItem(idOne, idTwo,){
+         const redDeleteButton = document.getElementById(idOne);
+         redDeleteButton.addEventListener("click", function(){
+            const cardItem = document.getElementById(idTwo);
+            cardItem.style.display = "none";
+         })
+      }
+      removeCardItem("first-remove-img","first-card");
+      removeCardItem("second-remove-img","second-card");
+
+      const redDeleteButton = document.getElementById("check-out-button");
+         redDeleteButton.addEventListener("click", function(){
+            const cardItem = document.getElementById("first-cointainer");
+            cardItem.style.display = "none";
+
+            const secondContainer = document.getElementById("second-container");
+            secondContainer.style.display = "block";
+         })
+         
+   </script>
+</body>
+
+</html>
